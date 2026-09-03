@@ -7,3 +7,10 @@
 # ☐  (200 g + 1 oz) × 2
 
 
+# test_kitchen.py
+from kitchen import Quantity
+ 
+def test_multiplication():
+    flour = Quantity(200)
+    flour.times(3)
+    assert flour.amount == 600
