@@ -7,8 +7,29 @@ class Quantity:
     def times(self, multiplier):
         return Quantity(self.amount * multiplier, self.unit)
 
+    def plus(self, addend):
+        return Sum(self, addend)
+
+    def reduce(self, unit):
+        return self
+
     def __eq__(self, other):
-        return self.amount == other.amount and self.unit == other.unit
+        if isinstance(other, Quantity):
+            return self.amount == other.amount and self.unit == other.unit
+        return False
 
     def __repr__(self):
         return f"Quantity({self.amount}, {self.unit!r})"
+
+class Sum:
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def reduce(self, unit):
+        amount = self.left.amount + self.right.amount
+        return Quantity(amount, unit)
+
+class Converter:
+    def reduce(self, expression, unit):
+        return expression.reduce(unit)
